@@ -1,0 +1,10 @@
+.next
+.editorconfig
+.gitignore
+.npmrc
+.nvmrc
+node_modules/
+public
+next-env.d.ts
+next.config.ts
+pnpm-lock.yaml
