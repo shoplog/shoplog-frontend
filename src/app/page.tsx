@@ -1,6 +1,7 @@
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import Image from 'next/image';
 
-export default function Home() {
+export default withPageAuthRequired(async function Home() {
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-between p-24">
 			<div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
@@ -97,7 +98,9 @@ export default function Home() {
 						Instantly deploy your Next.js site to a shareable URL with Vercel.
 					</p>
 				</a>
+
+				<a href="/api/auth/logout">Logout</a>
 			</div>
 		</main>
 	);
-}
+});
