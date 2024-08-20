@@ -1,9 +1,10 @@
-import './globals.css';
+import { cn } from '@/lib/utils';
+import '@/styles/globals.css';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
 	title: 'Shoplog',
@@ -17,8 +18,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
+			<head />
 			<UserProvider>
-				<body className={inter.className}>{children}</body>
+				<body className={cn('bg-background min-h-screen font-sans antialiased', inter.variable)}>{children}</body>
 			</UserProvider>
 		</html>
 	);
