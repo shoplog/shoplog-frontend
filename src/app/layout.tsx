@@ -1,3 +1,4 @@
+import { Providers } from '@/app/providers';
 import { cn } from '@/lib/utils';
 import '@/styles/globals.css';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
@@ -17,11 +18,10 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
-			<head />
-			<UserProvider>
-				<body className={cn('bg-background min-h-screen font-sans antialiased', inter.variable)}>{children}</body>
-			</UserProvider>
+		<html lang="en" suppressHydrationWarning>
+			<body className={cn('bg-background min-h-screen font-sans antialiased', inter.variable)}>
+				<Providers>{children}</Providers>
+			</body>
 		</html>
 	);
 }

@@ -1,3 +1,4 @@
+import { ThemeSelector } from '@/components/theme-selector';
 import { Button } from '@/components/ui/button';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
@@ -7,6 +8,7 @@ export default withPageAuthRequired(async function Home() {
 			<Button asChild>
 				<a href="/api/auth/logout">Logout</a>
 			</Button>
+			<ThemeSelector />
 		</main>
 	);
 });
