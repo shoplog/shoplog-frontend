@@ -9,7 +9,8 @@
 		"lint": "next lint",
 		"format": "prettier --check .",
 		"format:fix": "prettier --write .",
-		"prepare": "husky"
+		"prepare": "husky",
+		"ui": "pnpm dlx shadcn-ui@latest"
 	},
 	"dependencies": {
 		"@auth0/nextjs-auth0": "3.5.0",

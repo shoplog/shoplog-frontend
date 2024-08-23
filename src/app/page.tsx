@@ -1,5 +1,5 @@
-import { ThemeSelector } from '@/components/theme-selector';
-import { Button } from '@/components/ui/button';
+import { ThemeSelector } from '@/components';
+import { Button } from '@/components/ui';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
 export default withPageAuthRequired(async function Home() {
