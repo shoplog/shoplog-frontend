@@ -12,7 +12,8 @@
 		"prepare": "husky",
 		"ui": "pnpm dlx shadcn-ui@latest",
 		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
+		"build-storybook": "storybook build",
+		"openapi": "openapi-typescript http://localhost:8080/docs/openapi.json --output src/lib/api/types.ts --empty-objects-unknown && prettier --write src/lib/api/types.ts"
 	},
 	"dependencies": {
 		"@auth0/nextjs-auth0": "3.5.0",
@@ -23,6 +24,7 @@
 		"lucide-react": "0.435.0",
 		"next": "14.2.6",
 		"next-themes": "0.3.0",
+		"openapi-fetch": "0.11.1",
 		"react": "18.3.1",
 		"react-dom": "18.3.1",
 		"tailwind-merge": "2.5.2",
@@ -53,6 +55,7 @@
 		"eslint-plugin-storybook": "0.8.0",
 		"husky": "9.1.5",
 		"lint-staged": "15.2.9",
+		"openapi-typescript": "7.3.0",
 		"postcss": "8.4.41",
 		"prettier-plugin-tailwindcss": "0.6.6",
 		"storybook": "8.2.9",
