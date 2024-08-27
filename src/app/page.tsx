@@ -3,8 +3,15 @@ import { Button } from '@/components/ui';
 import { shoplogApiClient } from '@/lib/api';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
+async function getYears() {
+	const client = await shoplogApiClient();
+	const years = await client.GET('/vpic/years');
+
+	return years;
+}
+
 export default withPageAuthRequired(async function Home() {
-	const { data, error } = await shoplogApiClient.GET('/vpic/years');
+	const { error, data } = await getYears();
 
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-between p-24">
