@@ -1,8 +1,11 @@
 import { paths } from '@/lib/api/types';
 import { getAccessToken } from '@auth0/nextjs-auth0';
-import createClient from 'openapi-fetch';
+import createClient, { Client } from 'openapi-fetch';
 
-export const shoplogApiClient = async (accessToken?: string) => {
+export interface ShoplogApiClient
+	extends Omit<Client<paths, `${string}/${string}`>, 'HEAD' | 'OPTIONS' | 'TRACE' | 'eject' | 'use'> {}
+
+export const shoplogApiClient = async (accessToken?: string): Promise<ShoplogApiClient> => {
 	if (!accessToken) {
 		const res = await getAccessToken();
 
