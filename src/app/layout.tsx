@@ -15,10 +15,11 @@ import {
 } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import '@/styles/globals.css';
-import { CircleUser, Home, Menu, NotebookText, Search, Wrench } from 'lucide-react';
+import { CircleUser, Home, Menu, NotebookText, Wrench } from 'lucide-react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
+import { ReactNode } from 'react';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -27,11 +28,22 @@ export const metadata: Metadata = {
 	description: 'Vehicle maintenance and repair log',
 };
 
+type RouteNames = 'dashboard' | 'maintenanceLogs';
+
 export default function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const routes: Record<RouteNames, { title: string; href: string; icon: ReactNode }> = {
+		dashboard: { title: 'Dashboard', href: '/', icon: <Home className="h-5 w-5" /> },
+		maintenanceLogs: {
+			title: 'Maintenance Logs',
+			href: '/maintenance-logs',
+			icon: <NotebookText className="h-5 w-5" />,
+		},
+	};
+
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body className={cn('min-h-screen bg-background font-sans antialiased', inter.variable)}>
@@ -47,20 +59,16 @@ export default function RootLayout({
 								</div>
 								<div className="flex-1">
 									<nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-										<Link
-											href="#"
-											className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-										>
-											<Home className="h-4 w-4" />
-											Dashboard
-										</Link>
-										<Link
-											href="#"
-											className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-										>
-											<NotebookText className="h-4 w-4" />
-											Maintenance Logs
-										</Link>
+										{Object.entries(routes).map(([key, value]) => (
+											<Link
+												key={key}
+												href={value.href}
+												className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+											>
+												{value.icon}
+												{value.title}
+											</Link>
+										))}
 									</nav>
 								</div>
 							</div>
@@ -80,54 +88,40 @@ export default function RootLayout({
 												<Wrench className="h-6 w-6" />
 												<span className="sr-only">Shoplog</span>
 											</Link>
-											<Link
-												href="#"
-												className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-											>
-												<Home className="h-5 w-5" />
-												Dashboard
-											</Link>
-											<Link
-												href="#"
-												className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
-											>
-												<NotebookText className="h-5 w-5" />
-												Maintenance Logs
-											</Link>
+											{Object.entries(routes).map(([key, value]) => (
+												<Link
+													key={key}
+													href={value.href}
+													className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+												>
+													{value.icon}
+													{value.title}
+												</Link>
+											))}
 										</nav>
 									</SheetContent>
 								</Sheet>
-								<div className="w-full flex-1">
-									<form>
-										<div className="relative">
-											<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-											<Input
-												type="search"
-												placeholder="Search maintenance logs..."
-												className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
-											/>
-										</div>
-									</form>
+								<div className="flex w-full justify-end gap-4">
+									<ThemeSelector />
+									<DropdownMenu>
+										<DropdownMenuTrigger asChild>
+											<Button variant="secondary" size="icon" className="rounded-full">
+												<CircleUser className="h-5 w-5" />
+												<span className="sr-only">Toggle user menu</span>
+											</Button>
+										</DropdownMenuTrigger>
+										<DropdownMenuContent align="end">
+											<DropdownMenuLabel>My Account</DropdownMenuLabel>
+											<DropdownMenuSeparator />
+											<DropdownMenuItem>Settings</DropdownMenuItem>
+											<DropdownMenuItem>Support</DropdownMenuItem>
+											<DropdownMenuSeparator />
+											<DropdownMenuItem>
+												<a href="/api/auth/logout">Logout</a>
+											</DropdownMenuItem>
+										</DropdownMenuContent>
+									</DropdownMenu>
 								</div>
-								<ThemeSelector />
-								<DropdownMenu>
-									<DropdownMenuTrigger asChild>
-										<Button variant="secondary" size="icon" className="rounded-full">
-											<CircleUser className="h-5 w-5" />
-											<span className="sr-only">Toggle user menu</span>
-										</Button>
-									</DropdownMenuTrigger>
-									<DropdownMenuContent align="end">
-										<DropdownMenuLabel>My Account</DropdownMenuLabel>
-										<DropdownMenuSeparator />
-										<DropdownMenuItem>Settings</DropdownMenuItem>
-										<DropdownMenuItem>Support</DropdownMenuItem>
-										<DropdownMenuSeparator />
-										<DropdownMenuItem>
-											<a href="/api/auth/logout">Logout</a>
-										</DropdownMenuItem>
-									</DropdownMenuContent>
-								</DropdownMenu>
 							</header>
 							<main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">{children}</main>
 						</div>

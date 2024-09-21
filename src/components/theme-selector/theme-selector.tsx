@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 export function ThemeSelector() {
 	const [mounted, setMounted] = useState(false);
 	const { theme, themes, setTheme } = useTheme();
-
 	const hasThemes = themes.length > 0;
 
 	const getNextTheme = () => {
