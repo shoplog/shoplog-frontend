@@ -4,43 +4,18 @@
  */
 
 export interface paths {
-	'/': {
+	'/vehicles': {
 		parameters: {
 			query?: never;
 			header?: never;
 			path?: never;
 			cookie?: never;
 		};
-		/** Get API status */
-		get: {
-			parameters: {
-				query?: never;
-				header?: never;
-				path?: never;
-				cookie?: never;
-			};
-			requestBody?: never;
-			responses: {
-				/** @description API is up and running */
-				200: {
-					headers: {
-						[name: string]: unknown;
-					};
-					content: {
-						'application/json': {
-							/**
-							 * @description API status
-							 * @example up
-							 */
-							status?: string;
-						};
-					};
-				};
-				500: components['responses']['500'];
-			};
-		};
+		/** Get a list of vehicles */
+		get: operations['getVehicles'];
 		put?: never;
-		post?: never;
+		/** Create a new vehicle */
+		post: operations['createVehicle'];
 		delete?: never;
 		options?: never;
 		head?: never;
@@ -132,10 +107,207 @@ export interface paths {
 		patch?: never;
 		trace?: never;
 	};
+	'/services': {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/** Get a list of services */
+		get: operations['getServices'];
+		put?: never;
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	'/maintenance-logs/{vehicleId}': {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/** Get a list of maintenance logs */
+		get: operations['getMaintenanceLogs'];
+		put?: never;
+		/** Create a new maintenance log */
+		post: operations['createMaintenanceLog'];
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
 }
 export type webhooks = Record<string, never>;
 export interface components {
 	schemas: {
+		MaintenanceLog: {
+			/**
+			 * Format: int32
+			 * @description The unique identifier for the maintenance log
+			 */
+			id: number;
+			/** @description The unique identifier for the user who owns this maintenance log */
+			userId: string;
+			/**
+			 * Format: int32
+			 * @description The unique identifier for the vehicle associated with this maintenance log
+			 */
+			vehicleId: number;
+			/**
+			 * Format: date-time
+			 * @description The unique identifier for the service associated with this maintenance log
+			 */
+			serviceDate: string;
+			/** @description The notes of the maintenance log */
+			notes?: string | null;
+			/**
+			 * Format: int32
+			 * @description The mileage of the vehicle when the maintenance log was created
+			 */
+			mileage: number;
+			/**
+			 * Format: date-time
+			 * @description The date and time the maintenance log was created
+			 */
+			createdAt: string;
+			/**
+			 * Format: date-time
+			 * @description The date and time the maintenance log was last updated
+			 */
+			updatedAt: string;
+			/** @description The unique identifiers for the services associated with this maintenance log */
+			serviceIds?: number[];
+			/** @description The unique identifier for the service shop associated with this maintenance log */
+			serviceShopId?: number | null;
+		};
+		CreateMaintenanceLog: {
+			/**
+			 * Format: date-time
+			 * @description The unique identifier for the service associated with this maintenance log
+			 */
+			serviceDate: string;
+			/** @description The notes of the maintenance log */
+			notes?: string | null;
+			/**
+			 * Format: int32
+			 * @description The mileage of the vehicle when the maintenance log was created
+			 */
+			mileage: number;
+			/** @description The unique identifiers for the services associated with this maintenance log */
+			serviceIds?: number[];
+		};
+		Service: {
+			/**
+			 * Format: int32
+			 * @description The unique identifier for the service
+			 */
+			id: number;
+			/** @description The unique identifier for the user who owns this service */
+			userId?: string | null;
+			/** @description The name of the service */
+			name: string;
+			/** @description The description of the service */
+			description?: string | null;
+			/**
+			 * Format: date-time
+			 * @description The date and time the service was created
+			 */
+			createdAt: string;
+			/**
+			 * Format: date-time
+			 * @description The date and time the service was last updated
+			 */
+			updatedAt: string;
+		};
+		Vehicle: {
+			/**
+			 * Format: int32
+			 * @description The unique identifier for the vehicle
+			 */
+			id: number;
+			/** @description The unique identifier for the user who owns this vehicle */
+			userId: string;
+			/** @description The make of the vehicle */
+			make: string;
+			/** @description The model of the vehicle */
+			model: string;
+			/**
+			 * Format: int32
+			 * @description The year of the vehicle
+			 */
+			year: number;
+			/** @description The Vehicle Identification Number */
+			vin?: string | null;
+			/** @description The license plate of the vehicle */
+			plate?: string | null;
+			/** @description The color of the vehicle */
+			color?: string | null;
+			/**
+			 * Format: int32
+			 * @description The mileage of the vehicle
+			 */
+			mileage: number;
+			/**
+			 * @description The unit of the mileage
+			 * @enum {string}
+			 */
+			mileageDistanceUnit: 'KM' | 'MI';
+			/**
+			 * Format: date-time
+			 * @description The date and time the vehicle was created
+			 */
+			createdAt?: string;
+			/**
+			 * Format: date-time
+			 * @description The date and time the vehicle was last updated
+			 */
+			updatedAt?: string;
+			/** @description The attributes of the vehicle */
+			attributes?: components['schemas']['VehicleAttribute'][];
+		};
+		VehicleCreateRequestBody: {
+			/** @description The make of the vehicle */
+			make: string;
+			/** @description The model of the vehicle */
+			model: string;
+			/**
+			 * Format: int32
+			 * @description The year of the vehicle
+			 */
+			year: number;
+			/** @description The Vehicle Identification Number */
+			vin?: string | null;
+			/** @description The license plate of the vehicle */
+			plate?: string | null;
+			/** @description The color of the vehicle */
+			color?: string | null;
+			/**
+			 * Format: int32
+			 * @description The mileage of the vehicle
+			 */
+			mileage: number;
+			/**
+			 * @description The unit of the mileage
+			 * @enum {string}
+			 */
+			mileageDistanceUnit: 'KM' | 'MI';
+			/** @description The attributes of the vehicle */
+			attributes?: components['schemas']['VehicleAttribute'][];
+		};
+		VehicleAttribute: {
+			/** @description The code of the attribute */
+			code: string;
+			/** @description The name of the attribute */
+			name: string;
+			/** @description The value of the attribute */
+			value: string;
+		};
 		/** @description A vehicle search result */
 		VPICVinResponseBody: {
 			/**
@@ -357,6 +529,60 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+	getVehicles: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Vehicles found */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					'application/json': components['schemas']['Vehicle'][];
+				};
+			};
+			401: components['responses']['401'];
+			403: components['responses']['403'];
+			404: components['responses']['404'];
+			500: components['responses']['500'];
+		};
+	};
+	createVehicle: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		requestBody: {
+			content: {
+				'application/json': components['schemas']['VehicleCreateRequestBody'];
+			};
+		};
+		responses: {
+			/** @description Vehicle created */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					'application/json': components['schemas']['Vehicle'];
+				};
+			};
+			400: components['responses']['400'];
+			401: components['responses']['401'];
+			403: components['responses']['403'];
+			404: components['responses']['404'];
+			422: components['responses']['422'];
+			500: components['responses']['500'];
+		};
+	};
 	getVPICVin: {
 		parameters: {
 			query?: never;
@@ -510,6 +736,90 @@ export interface operations {
 					'application/json': components['schemas']['VPICModelAttributesResponseBody'];
 				};
 			};
+			401: components['responses']['401'];
+			403: components['responses']['403'];
+			404: components['responses']['404'];
+			422: components['responses']['422'];
+			500: components['responses']['500'];
+		};
+	};
+	getServices: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Services found */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					'application/json': components['schemas']['Service'][];
+				};
+			};
+			401: components['responses']['401'];
+			403: components['responses']['403'];
+			404: components['responses']['404'];
+			500: components['responses']['500'];
+		};
+	};
+	getMaintenanceLogs: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path: {
+				/** @description Vehicle ID */
+				vehicleId: number;
+			};
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Maintenance logs found */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					'application/json': components['schemas']['MaintenanceLog'][];
+				};
+			};
+			401: components['responses']['401'];
+			403: components['responses']['403'];
+			404: components['responses']['404'];
+			500: components['responses']['500'];
+		};
+	};
+	createMaintenanceLog: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path: {
+				/** @description Vehicle ID */
+				vehicleId: number;
+			};
+			cookie?: never;
+		};
+		requestBody: {
+			content: {
+				'application/json': components['schemas']['CreateMaintenanceLog'];
+			};
+		};
+		responses: {
+			/** @description Maintenance log created */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					'application/json': components['schemas']['MaintenanceLog'];
+				};
+			};
+			400: components['responses']['400'];
 			401: components['responses']['401'];
 			403: components['responses']['403'];
 			404: components['responses']['404'];
