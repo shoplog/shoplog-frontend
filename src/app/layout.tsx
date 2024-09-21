@@ -34,10 +34,10 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<body className={cn('bg-background min-h-screen font-sans antialiased', inter.variable)}>
+			<body className={cn('min-h-screen bg-background font-sans antialiased', inter.variable)}>
 				<Providers>
 					<div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-						<div className="bg-muted/40 hidden border-r md:block">
+						<div className="hidden border-r bg-muted/40 md:block">
 							<div className="flex h-full max-h-screen flex-col gap-2">
 								<div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
 									<Link href="/" className="flex items-center gap-2 font-semibold">
@@ -49,14 +49,14 @@ export default function RootLayout({
 									<nav className="grid items-start px-2 text-sm font-medium lg:px-4">
 										<Link
 											href="#"
-											className="text-muted-foreground hover:text-primary flex items-center gap-3 rounded-lg px-3 py-2 transition-all"
+											className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
 										>
 											<Home className="h-4 w-4" />
 											Dashboard
 										</Link>
 										<Link
 											href="#"
-											className="text-muted-foreground hover:text-primary flex items-center gap-3 rounded-lg px-3 py-2 transition-all"
+											className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
 										>
 											<NotebookText className="h-4 w-4" />
 											Maintenance Logs
@@ -66,7 +66,7 @@ export default function RootLayout({
 							</div>
 						</div>
 						<div className="flex flex-col">
-							<header className="bg-muted/40 flex h-14 items-center gap-4 border-b px-4 lg:h-[60px] lg:px-6">
+							<header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
 								<Sheet>
 									<SheetTrigger asChild>
 										<Button variant="outline" size="icon" className="shrink-0 md:hidden">
@@ -82,14 +82,14 @@ export default function RootLayout({
 											</Link>
 											<Link
 												href="#"
-												className="text-muted-foreground hover:text-foreground mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2"
+												className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
 											>
 												<Home className="h-5 w-5" />
 												Dashboard
 											</Link>
 											<Link
 												href="#"
-												className="bg-muted text-foreground hover:text-foreground mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2"
+												className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
 											>
 												<NotebookText className="h-5 w-5" />
 												Maintenance Logs
@@ -100,11 +100,11 @@ export default function RootLayout({
 								<div className="w-full flex-1">
 									<form>
 										<div className="relative">
-											<Search className="text-muted-foreground absolute left-2.5 top-2.5 h-4 w-4" />
+											<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
 											<Input
 												type="search"
 												placeholder="Search maintenance logs..."
-												className="bg-background w-full appearance-none pl-8 shadow-none md:w-2/3 lg:w-1/3"
+												className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
 											/>
 										</div>
 									</form>
