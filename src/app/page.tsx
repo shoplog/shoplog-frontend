@@ -26,12 +26,17 @@ export default withPageAuthRequired(async function Home() {
 	}
 
 	return (
-		<main className="flex min-h-screen flex-col items-center justify-between p-24">
-			<Button asChild>
-				<a href="/api/auth/logout">Logout</a>
-			</Button>
-			<MaintenanceLogTable logs={maintenanceLogs} />
-			<ThemeSelector />
-		</main>
+		<>
+			<div className="flex items-center">
+				<h1 className="text-lg font-semibold md:text-2xl">Maintenance Log</h1>
+			</div>
+			<div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
+				<div className="flex flex-col items-center gap-1 text-center">
+					<h3 className="text-2xl font-bold tracking-tight">You have no log entries</h3>
+					<p className="text-muted-foreground text-sm">You can start selling as soon as you add an entry.</p>
+					<Button className="mt-4">Add Entry</Button>
+				</div>
+			</div>
+		</>
 	);
 });
